@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brineverse SMP - Tools & Features</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap">
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            overflow-x: hidden;
+        }
+
+        header {
+            background: linear-gradient(to right, rgb(160, 6, 199), rgb(133, 1, 209));
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .logo img {
+            height: 60px;
+        }
+
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        nav a {
+            color: white;
+            font-size: 18px;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        nav a:hover {
+            background-color: #444;
+            transform: scale(1.1);
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: #eee;
+            border-bottom: 2px solid #ccc;
+        }
+
+        .section-header h1 {
+            font-size: 36px;
+            color: rgb(133, 1, 209);
+        }
+
+        .section-header p {
+            font-size: 18px;
+            color: #555;
+        }
+
+        /* Content Cards */
+        .content-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            padding: 50px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card i {
+            font-size: 60px;
+            color: rgb(133, 1, 209);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #222;
+            color: white;
+            padding: 40px 20px;
+        }
+
+        footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        footer .footer-links a {
+            color: #ffcc00;
+            text-decoration: none;
+        }
+
+        footer .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        footer p {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding-top: 50px;
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .modal-content button {
+            background-color: rgb(133, 1, 209);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content button:hover {
+            background-color: rgb(160, 6, 199);
+        }
+
+        .modal-content .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            cursor: pointer;
+        }
+
+        .modal-content .close:hover,
+        .modal-content .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="assets/images/brineverse.webp" alt="Brineverse Logo">
+        </div>
+        <nav>
+            <a href="dash.html"><i class="fas fa-home"></i> Home</a>
+            <a href="tools.html"><i class="fas fa-cogs"></i> Tools</a>
+            <a href="members.html"><i class="fas fa-users"></i> Members</a>
+            <a href="others.html"><i class="fas fa-globe"></i> Web</a>
+        </nav>
+    </header>
+
+    <section class="section-header">
+        <h1>Welcome to Brineverse SMP</h1>
+        <p>Explore our powerful tools and features designed to enhance your Minecraft experience.</p>
+    </section>
+
+    <section class="content-cards">
+        <div class="card" onclick="window.location.href='bgtool.html';">
+            <i class="fas fa-cut"></i>
+            <h3>BG Remover</h3>
+            <p>Remove image backgrounds with just one click.</p>
+        </div>
+        <div class="card" onclick="window.location.href='imageup.html';">
+            <i class="fas fa-image"></i>
+            <h3>Image Upscaler</h3>
+            <p>Upscale your images with AI precision.</p>
+        </div>
+        <div class="card" onclick="openModal();">
+            <i class="fas fa-shield-alt"></i>
+            <h3>Dashboard</h3>
+            <p>Smp members only.</p>
+        </div>
+        <div class="card" onclick="window.location.href='www.example.com';">
+            <i class="fas fa-chart-line"></i>
+            <h3>Analytics</h3>
+            <p>Track and optimize your gameplay data.</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="contact.html">Contact Us</a>
+        </div>
+        <p>© 2024 Brineverse SMP | All Rights Reserved</p>
+    </footer>
+
+    <!-- Password Modal -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Enter Password</h2>
+            <input type="password" id="passwordInput" placeholder="Enter password" />
+            <button onclick="checkPassword()">Submit</button>
+        </div>
+    </div>
+
+    <script>
+        // Open the password modal
+        function openModal() {
+            document.getElementById("passwordModal").style.display = "block";
+        }
+
+        // Close the password modal
+        function closeModal() {
+            document.getElementById("passwordModal").style.display = "none";
+        }
+
+        // Check password and redirect if correct
+        function checkPassword() {
+            const password = document.getElementById("passwordInput").value;
+
+            if (password === "@brineverse@12") {
+                window.location.href = "dashboard.html"; // Redirect to dashboard
+            } else {
+                alert("Incorrect password. Please try again.");
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById("passwordModal");
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

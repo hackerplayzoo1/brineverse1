@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suggestion Box</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        /* Card Container */
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            padding: 30px 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        /* Heading */
+        .container h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2d89e5;
+            font-weight: bold;
+        }
+
+        /* Textarea Styling */
+        .container textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 16px;
+            resize: none;
+            margin-bottom: 15px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Button Styling */
+        .container button {
+            background: #2d89e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .container button:hover {
+            background: #1c5db5;
+        }
+
+        /* Success Message Styling */
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            background: #e0f7fa;
+            border-left: 5px solid #00796b;
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: #00796b;
+            font-size: 16px;
+            animation: fadeIn 1s ease-in-out;
+            text-align: center;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px 30px;
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+
+        .modal h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .modal input {
+            width: 80%;
+            padding: 8px 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal button {
+            background: #2d89e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .modal button:hover {
+            background: #1c5db5;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+    <script>
+        function showNamePrompt() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('nameModal').style.display = 'block';
+        }
+
+        function closeNamePrompt() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('nameModal').style.display = 'none';
+        }
+
+        async function handleSubmit() {
+            const suggestion = document.getElementById('suggestion').value.trim();
+            if (!suggestion) {
+                alert("Please enter a suggestion!");
+                return;
+            }
+
+            // Show name input modal
+            showNamePrompt();
+        }
+
+        async function submitSuggestion() {
+            const name = document.getElementById('nameInput').value.trim();
+            if (!name) {
+                alert("Please enter your name!");
+                return;
+            }
+
+            closeNamePrompt();
+
+            const suggestion = document.getElementById('suggestion').value.trim();
+            const payload = {
+                content: `New Suggestion Received!`,
+                embeds: [
+                    {
+                        title: "Suggestion Details",
+                        fields: [
+                            { name: "Name", value: name, inline: true },
+                            { name: "Suggestion", value: suggestion, inline: true }
+                        ]
+                    }
+                ]
+            };
+
+            try {
+                const response = await fetch("https://discord.com/api/webhooks/1319609830134251581/4w10hVjD6r3C2kH9bFKQIjL0bsQnaovV-7uT_hLkSnUBkzRZSesdhB4K0RJX-1CW2j-P", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    // Show success message
+                    document.getElementById('success-message').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('success-message').style.display = 'none';
+                    }, 5000);  // Hide after 5 seconds
+
+                    // Clear the suggestion textarea
+                    document.getElementById('suggestion').value = '';
+                } else {
+                    alert("Failed to send suggestion. Please try again later.");
+                }
+            } catch (error) {
+                console.error("Error submitting suggestion:", error);
+                alert("An error occurred while sending your suggestion.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Suggestion Box</h1>
+        <textarea id="suggestion" rows="5" placeholder="Enter your suggestion here..."></textarea>
+        <br>
+        <button onclick="handleSubmit()">Submit Suggestion</button>
+
+        <!-- Success Message -->
+        <div id="success-message" class="success-message">
+            <strong>Thank you for your suggestion!</strong>
+        </div>
+    </div>
+
+    <!-- Modal for Name -->
+    <div id="overlay" class="overlay" onclick="closeNamePrompt()"></div>
+    <div id="nameModal" class="modal">
+        <h2>Enter Your Name</h2>
+        <input type="text" id="nameInput" placeholder="Your name here..." />
+        <br>
+        <button onclick="submitSuggestion()">Submit</button>
+    </div>
+</body>
+</html>

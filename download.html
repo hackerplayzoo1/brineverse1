@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Download</title>
+    <!-- Include Google Fonts and Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1c1c1c, #3a3a3a);
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: 2px;
+        }
+
+        .home-icon {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            font-size: 30px;
+            color: #fff;
+            text-decoration: none;
+            background-color: #444;
+            padding: 12px;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .home-icon:hover {
+            background-color: #ff5722;
+        }
+
+        /* Footer Styling */
+        footer {
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: auto;
+            font-size: 14px;
+        }
+
+        /* Card Container */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 50px 20px;
+        }
+
+        /* Individual Card */
+        .card {
+            background-color: #2b2b2b;
+            border-radius: 12px;
+            width: 320px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            background-color: #3c3c3c;
+        }
+
+        .card .image-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background-color: #444;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card .image-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .card .image-container:hover img {
+            transform: scale(1.1);
+        }
+
+        .card h2 {
+            color: #fff;
+            font-size: 26px;
+            margin: 20px 0;
+        }
+
+        .card p {
+            color: #aaa;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .btn-download {
+            background-color: #ff5722;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn-download:hover {
+            background-color: #ff784e;
+            transform: translateY(-5px);
+        }
+
+        /* Modal for Password */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding-top: 60px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .modal-content {
+            background-color: #333;
+            color: #fff;
+            margin: 5% auto;
+            padding: 40px;
+            border-radius: 12px;
+            width: 400px;
+            max-width: 90%;
+            animation: slideUp 0.5s ease-in-out;
+        }
+
+        .modal-header {
+            font-size: 26px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-footer button {
+            padding: 12px 20px;
+            background-color: #ff5722;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 48%;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-footer button:hover {
+            background-color: #ff784e;
+        }
+
+        .continue-btn {
+            background-color: #f44336;
+        }
+
+        .continue-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 16px;
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* Keyframe animations */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 400px;
+                margin-bottom: 20px;
+            }
+
+            .modal-content {
+                width: 90%;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <a href="others.html" class="home-icon">
+            <i class="fas fa-home"></i> <!-- Font Awesome Home Icon -->
+        </a>
+      Download Page
+    </header>
+
+    <!-- Main Content - Card Container -->
+    <div class="card-container" id="card-container">
+        <!-- Cards will be added dynamically here -->
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Brineverse | All Rights Reserved
+    </footer>
+
+    <!-- Modal for Password -->
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                Enter Password
+            </div>
+            <div class="modal-body">
+                <input type="password" id="passwordInput" placeholder="Enter Password" style="width: 100%; padding: 15px; font-size: 18px; border-radius: 5px; border: 1px solid #ccc;">
+                <div id="error-message" class="error-message">Incorrect password. Please try again.</div>
+            </div>
+            <div class="modal-footer">
+                <button onclick="verifyPassword()">Submit</button>
+                <button onclick="closeModal()">Cancel</button>
+                <button class="continue-btn" onclick="continueWithoutPassword()">Continue without Password</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const downloadData = [
+            {
+                title: "Minecraft",
+                description: "Download the latest Version of Minecraft Here.",
+                image: "https://media.discordapp.net/attachments/1223998992527130707/1319621767500660787/here-are-some-wallpapaer-i-made-fell-free-to-share-ideas-of-v0-7buzb5xztqhb1.png?ex=6770844a&is=676f32ca&hm=7d401835416cfb12d25bc06cd2b13701c3c9e2960e20d093ff3ad72522458476&=&format=webp&quality=lossless",
+                downloadLinkWithPassword: "https://aternos.org/:en/withpassword",
+                downloadLinkWithoutPassword: "https://aternos.org/:en/withoutpassword",
+                modalId: "passwordModal"
+            },
+            {
+                title: "Mods Here",
+                description: "Download Mods folder 1.21.1",
+                image: "https://media.discordapp.net/attachments/1223998992527130707/1322435307081039923/mods.jpg?ex=6770dd5a&is=676f8bda&hm=59f2ceaf5168d9959289a79448c07702fbf3b4bd4e0886db35cd7753430d7f96&=&format=webp&width=520&height=390",
+                downloadLinkWithPassword: "https://aternos.org/:en/withpassword",
+                downloadLinkWithoutPassword: "https://aternos.org/:en/withoutpassword",
+                modalId: "passwordModal"
+            },
+            {
+                title: "Mcpe Lunar Client",
+                description: "Download Lunar Client for Minecrafr Pocket Edition.",
+                image: "https://media.discordapp.net/attachments/1223998992527130707/1322436028774223872/lunarclient.jpg?ex=6770de06&is=676f8c86&hm=f86e0f743e00e4a604645658116641e264afaf4f9ba42bc7752958e32f180a6c&=&format=webp&width=693&height=390",
+                downloadLinkWithPassword: "https://aternos.org/:en/withpassword",
+                downloadLinkWithoutPassword: "https://aternos.org/:en/withoutpassword",
+                modalId: "passwordModal"
+            },
+            {
+                title: "Puspa-2",
+                description: "Download Puspa-2 Movie Here.",
+                image: "https://media.discordapp.net/attachments/1223998992527130707/1322437476601565324/Pushpa-2.jpg?ex=6770df60&is=676f8de0&hm=e7ea1f63b952c6c308dba46b31eea172a931f4ec02d5decb259208195f1733a6&=&format=webp&width=550&height=309",
+                downloadLinkWithPassword: "https://new1.filesdl.in/cloud/I7TLwmRzrg",
+                downloadLinkWithoutPassword: "https://link-target.net/1271559/pushpa2",
+                modalId: "passwordModal"
+            },
+            {
+                title: "Bhool Bhulaiyaa 3",
+                description: "Download Puspa-2 Movie Here.",
+                image: "https://media.discordapp.net/attachments/1223998992527130707/1322442642239262740/bhoolbhulaiyaa.jpg?ex=6770e42f&is=676f92af&hm=15d22bec6b70bc44e896b6198c022ff43e466507607dc9c1c531da695279f3b9&=&format=webp&width=693&height=390",
+                downloadLinkWithPassword: "https://linkmake.in/view/ZlYpxKYBgM",
+                downloadLinkWithoutPassword: "https://linkmake.in/view/ZlYpxKYBgM",
+                modalId: "passwordModal"
+            },
+        ];
+
+        function generateCards() {
+            const container = document.getElementById("card-container");
+
+            downloadData.forEach(data => {
+                const card = document.createElement("div");
+                card.classList.add("card");
+
+                card.innerHTML = `
+                    <div class="image-container">
+                        <img src="${data.image}" alt="${data.title}">
+                    </div>
+                    <h2>${data.title}</h2>
+                    <p>${data.description}</p>
+                    <a href="#" class="btn-download" onclick="showModal(event, '${data.modalId}', '${data.downloadLinkWithPassword}', '${data.downloadLinkWithoutPassword}')">Download Now</a>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function showModal(event, modalId, downloadLinkWithPassword, downloadLinkWithoutPassword) {
+            event.preventDefault();
+            window.downloadLinkWithPassword = downloadLinkWithPassword;
+            window.downloadLinkWithoutPassword = downloadLinkWithoutPassword;
+            const modal = document.getElementById(modalId);
+            modal.style.display = "block";
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("passwordModal");
+            modal.style.display = "none";
+        }
+
+        function verifyPassword() {
+            const enteredPassword = document.getElementById("passwordInput").value;
+            const correctPassword = "@brineverse@12";
+
+            if (enteredPassword === correctPassword) {
+                window.location.href = window.downloadLinkWithPassword;
+            } else {
+                document.getElementById("error-message").style.display = "block";
+            }
+        }
+
+        function continueWithoutPassword() {
+            window.location.href = window.downloadLinkWithoutPassword;
+        }
+
+        window.onload = generateCards;
+    </script>
+
+</body>
+</html>
