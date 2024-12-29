@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        /* Existing styles */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -22,6 +23,12 @@
             justify-content: space-between;
             align-items: center;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            flex-wrap: wrap; /* Allow flex items to wrap */
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
         }
 
         .logo img {
@@ -39,6 +46,8 @@
         nav {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
+            justify-content: flex-start; /* Align links to the left */
         }
 
         nav a {
@@ -55,8 +64,27 @@
             transform: scale(1.1);
         }
 
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav {
+                justify-content: center;
+                width: 100%;
+                flex-direction: column;
+            }
+            nav a {
+                padding: 10px;
+                text-align: center;
+                width: 100%;
+            }
+        }
+
+        /* Welcome Section */
         .welcome-section {
-            background-image: url('https://media.discordapp.net/attachments/1223998992527130707/1322489087722127390/background.png?format=webp&quality=lossless');
+            background-image: url('https://media.discordapp.net/attachments/1223998992527130707/1322489087722127390/background.png?ex=67710f71&is=676fbdf1&hm=06f7615d52fdcb1dac9b27ce62076c67dee36463471ce1a5c40b376affea1efe&=&format=webp&quality=lossless&width=550&height=314'); 
             background-size: cover;
             background-position: center;
             color: rgb(253, 253, 253);
@@ -76,12 +104,17 @@
             margin-top: 10px;
         }
 
+        /* Content Sections */
+        .content-cards, .testimonials-section, .faq-section {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
         .content-cards {
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
             gap: 20px;
-            padding: 50px 20px;
         }
 
         .card {
@@ -110,10 +143,9 @@
             margin-bottom: 10px;
         }
 
+        /* Testimonials Section */
         .testimonials-section {
             background: #f9f9f9;
-            padding: 50px 20px;
-            text-align: center;
         }
 
         .testimonials-section h2 {
@@ -124,8 +156,7 @@
         .testimonial {
             margin: 10px auto;
             padding: 20px;
-            width: 90%;
-            max-width: 600px;
+            width: 70%;
             text-align: left;
             border-left: 5px solid #333;
             background: white;
@@ -144,11 +175,7 @@
             color: #555;
         }
 
-        .faq-section {
-            padding: 50px 20px;
-            text-align: center;
-        }
-
+        /* FAQ Section */
         .faq-section h2 {
             font-size: 36px;
             margin-bottom: 30px;
@@ -158,8 +185,7 @@
             text-align: left;
             margin: 0 auto;
             padding: 10px 20px;
-            width: 90%;
-            max-width: 600px;
+            width: 70%;
             background: white;
             border-radius: 5px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -177,6 +203,7 @@
             line-height: 1.6;
         }
 
+        /* Footer */
         footer {
             background-color: #333;
             color: white;
@@ -192,55 +219,10 @@
         footer a:hover {
             text-decoration: underline;
         }
-
-        /* Responsive Styles */
-        @media (max-width: 768px) {
-            nav {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .welcome-section h1 {
-                font-size: 40px;
-            }
-
-            .card {
-                width: 90%;
-                max-width: 400px;
-                margin: 0 auto;
-            }
-
-            .video-preview iframe {
-                width: 100%;
-                height: auto;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .welcome-section h1 {
-                font-size: 30px;
-            }
-
-            nav a {
-                font-size: 16px;
-            }
-
-            .content-cards {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .testimonial {
-                width: 100%;
-            }
-
-            .faq {
-                width: 100%;
-            }
-        }
     </style>
 </head>
 <body>
+
 <header>
     <div class="logo">
         <img src="assets/images/brineverse.webp" alt="Brineverse Logo">
@@ -280,11 +262,11 @@
     <h2>What We Say</h2>
     <div class="testimonial">
         <p>"Brineverse has brought back the true spirit of Herobrine SMP. It's an amazing community!"</p>
-        <cite>&mdash; Maxobrine</cite>
+        <cite>— Maxobrine</cite>
     </div>
     <div class="testimonial">
         <p>"The tools and resources provided are top-notch. I've had a great time exploring the SMP!"</p>
-        <cite>&mdash; BrineAjay</cite>
+        <cite>— BrineAjay</cite>
     </div>
 </section>
 
@@ -305,6 +287,7 @@
     <div class="faq">
         <h4>Q: Are the tools free to use?</h4>
         <p>A: Yes, all our tools are completely free for our members.</p>
+        <cite>— BrineAjay</cite>
     </div>
 </section>
 
